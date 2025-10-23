@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snake Oyunu 🐍</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            padding: 20px;
+        }
+
+        .game-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .game-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .game-header h1 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .score-board {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+            gap: 20px;
+        }
+
+        .score-item {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px 25px;
+            border-radius: 15px;
+            text-align: center;
+            min-width: 120px;
+        }
+
+        .score-label {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+        }
+
+        .score-value {
+            color: white;
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        #gameCanvas {
+            display: block;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.5);
+            border: 3px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .controls {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            margin: 5px;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(-1px);
+        }
+
+        .instructions {
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            color: white;
+            text-align: center;
+        }
+
+        .instructions h3 {
+            margin-bottom: 10px;
+            color: #ffd700;
+        }
+
+        .instructions p {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            opacity: 0.9;
+        }
+
+        .game-over {
+            display: none;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.9);
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            border: 3px solid #ffd700;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .game-over h2 {
+            color: #ffd700;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        .game-over p {
+            color: white;
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        .mobile-controls {
+            display: none;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            max-width: 250px;
+            margin: 20px auto 0;
+        }
+
+        .mobile-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            font-size: 1.5rem;
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .mobile-btn:active {
+            background: rgba(255, 255, 255, 0.4);
+            transform: scale(0.95);
+        }
+
+        .mobile-btn:nth-child(1) {
+            grid-column: 2;
+        }
+
+        .mobile-btn:nth-child(2) {
+            grid-column: 1;
+            grid-row: 2;
+        }
+
+        .mobile-btn:nth-child(3) {
+            grid-column: 2;
+            grid-row: 2;
+        }
+
+        .mobile-btn:nth-child(4) {
+            grid-column: 3;
+            grid-row: 2;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-controls {
+                display: grid;
+            }
+
+            .game-container {
+                padding: 20px;
+            }
+
+            #gameCanvas {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="game-header">
+            <h1>🐍 Snake Oyunu</h1>
+        </div>
+
+        <div class="score-board">
+            <div class="score-item">
+                <div class="score-label">Skor</div>
+                <div class="score-value" id="score">0</div>
+            </div>
+            <div class="score-item">
+                <div class="score-label">En Yüksek</div>
+                <div class="score-value" id="highScore">0</div>
+            </div>
+        </div>
+
+        <div style="position: relative;">
+            <canvas id="gameCanvas" width="400" height="400"></canvas>
+            <div class="game-over" id="gameOver">
+                <h2>Oyun Bitti! 💀</h2>
+                <p>Skorunuz: <span id="finalScore">0</span></p>
+                <button class="btn" onclick="resetGame()">Tekrar Oyna</button>
+            </div>
+        </div>
+
+        <div class="mobile-controls">
+            <button class="mobile-btn" onclick="changeDirection('UP')">▲</button>
+            <button class="mobile-btn" onclick="changeDirection('LEFT')">◀</button>
+            <button class="mobile-btn" onclick="changeDirection('DOWN')">▼</button>
+            <button class="mobile-btn" onclick="changeDirection('RIGHT')">▶</button>
+        </div>
+
+        <div class="controls">
+            <button class="btn" id="startBtn" onclick="startGame()">Oyunu Başlat</button>
+            <button class="btn" onclick="pauseGame()">Duraklat</button>
+        </div>
+
+        <div class="instructions">
+            <h3>🎮 Nasıl Oynanır?</h3>
+            <p>Ok tuşları veya WASD ile yılanı hareket ettirin. 🍎 Elmaları yiyerek büyüyün ve kenarlara ya da kendi vücudunuza çarpmadan en yüksek skoru yakalamaya çalışın!</p>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const gridSize = 20;
+        const tileCount = canvas.width / gridSize;
+
+        let snake = [{x: 10, y: 10}];
+        let food = {x: 15, y: 15};
+        let dx = 0;
+        let dy = 0;
+        let score = 0;
+        let highScore = parseInt(localStorage.getItem('snakeHighScore')) || 0;
+        let gameLoop;
+        let gameStarted = false;
+        let gamePaused = false;
+
+        document.getElementById('highScore').textContent = highScore;
+
+        function startGame() {
+            if (!gameStarted) {
+                gameStarted = true;
+                dx = 1;
+                dy = 0;
+                document.getElementById('startBtn').textContent = 'Yeniden Başlat';
+                document.getElementById('gameOver').style.display = 'none';
+                gameLoop = setInterval(update, 100);
+            } else {
+                resetGame();
+            }
+        }
+
+        function pauseGame() {
+            if (!gameStarted) return;
+            
+            if (gamePaused) {
+                gamePaused = false;
+                gameLoop = setInterval(update, 100);
+            } else {
+                gamePaused = true;
+                clearInterval(gameLoop);
+            }
+        }
+
+        function resetGame() {
+            clearInterval(gameLoop);
+            snake = [{x: 10, y: 10}];
+            food = generateFood();
+            dx = 0;
+            dy = 0;
+            score = 0;
+            gameStarted = false;
+            gamePaused = false;
+            document.getElementById('score').textContent = score;
+            document.getElementById('startBtn').textContent = 'Oyunu Başlat';
+            document.getElementById('gameOver').style.display = 'none';
+            drawGame();
+        }
+
+        function update() {
+            moveSnake();
+            if (checkCollision()) {
+                gameOver();
+                return;
+            }
+            if (checkFood()) {
+                score += 10;
+                document.getElementById('score').textContent = score;
+                if (score > highScore) {
+                    highScore = score;
+                    document.getElementById('highScore').textContent = highScore;
+                    localStorage.setItem('snakeHighScore', highScore);
+                }
+                food = generateFood();
+            } else {
+                snake.pop();
+            }
+            drawGame();
+        }
+
+        function moveSnake() {
+            const head = {x: snake[0].x + dx, y: snake[0].y + dy};
+            snake.unshift(head);
+        }
+
+        function checkCollision() {
+            const head = snake[0];
+            
+            // Duvar çarpması
+            if (head.x < 0 || head.x >= tileCount || head.y < 0 || head.y >= tileCount) {
+                return true;
+            }
+            
+            // Kendine çarpma
+            for (let i = 1; i < snake.length; i++) {
+                if (head.x === snake[i].x && head.y === snake[i].y) {
+                    return true;
+                }
+            }
+            
+            return false;
+        }
+
+        function checkFood() {
+            return snake[0].x === food.x && snake[0].y === food.y;
+        }
+
+        function generateFood() {
+            let newFood;
+            while (true) {
+                newFood = {
+                    x: Math.floor(Math.random() * tileCount),
+                    y: Math.floor(Math.random() * tileCount)
+                };
+                
+                let onSnake = false;
+                for (let segment of snake) {
+                    if (segment.x === newFood.x && segment.y === newFood.y) {
+                        onSnake = true;
+                        break;
+                    }
+                }
+                
+                if (!onSnake) break;
+            }
+            return newFood;
+        }
+
+        function drawGame() {
+            // Arka plan
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.3)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            // Grid çizgileri
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.05)';
+            ctx.lineWidth = 1;
+            for (let i = 0; i < tileCount; i++) {
+                ctx.beginPath();
+                ctx.moveTo(i * gridSize, 0);
+                ctx.lineTo(i * gridSize, canvas.height);
+                ctx.stroke();
+                ctx.beginPath();
+                ctx.moveTo(0, i * gridSize);
+                ctx.lineTo(canvas.width, i * gridSize);
+                ctx.stroke();
+            }
+
+            // Yılan
+            snake.forEach((segment, index) => {
+                if (index === 0) {
+                    // Baş
+                    ctx.fillStyle = '#4ade80';
+                    ctx.shadowBlur = 10;
+                    ctx.shadowColor = '#4ade80';
+                } else {
+                    // Gövde
+                    ctx.fillStyle = '#22c55e';
+                    ctx.shadowBlur = 5;
+                    ctx.shadowColor = '#22c55e';
+                }
+                
+                ctx.fillRect(
+                    segment.x * gridSize + 1,
+                    segment.y * gridSize + 1,
+                    gridSize - 2,
+                    gridSize - 2
+                );
+                
+                ctx.shadowBlur = 0;
+            });
+
+            // Elma
+            ctx.fillStyle = '#ef4444';
+            ctx.shadowBlur = 15;
+            ctx.shadowColor = '#ef4444';
+            ctx.beginPath();
+            ctx.arc(
+                food.x * gridSize + gridSize / 2,
+                food.y * gridSize + gridSize / 2,
+                gridSize / 2 - 2,
+                0,
+                Math.PI * 2
+            );
+            ctx.fill();
+            ctx.shadowBlur = 0;
+        }
+
+        function gameOver() {
+            clearInterval(gameLoop);
+            gameStarted = false;
+            document.getElementById('finalScore').textContent = score;
+            document.getElementById('gameOver').style.display = 'block';
+            document.getElementById('startBtn').textContent = 'Yeniden Başlat';
+        }
+
+        function changeDirection(direction) {
+            if (!gameStarted) return;
+
+            switch(direction) {
+                case 'UP':
+                    if (dy === 0) { dx = 0; dy = -1; }
+                    break;
+                case 'DOWN':
+                    if (dy === 0) { dx = 0; dy = 1; }
+                    break;
+                case 'LEFT':
+                    if (dx === 0) { dx = -1; dy = 0; }
+                    break;
+                case 'RIGHT':
+                    if (dx === 0) { dx = 1; dy = 0; }
+                    break;
+            }
+        }
+
+        // Klavye kontrolleri
+        document.addEventListener('keydown', (e) => {
+            if (!gameStarted) return;
+
+            switch(e.key) {
+                case 'ArrowUp':
+                case 'w':
+                case 'W':
+                    e.preventDefault();
+                    changeDirection('UP');
+                    break;
+                case 'ArrowDown':
+                case 's':
+                case 'S':
+                    e.preventDefault();
+                    changeDirection('DOWN');
+                    break;
+                case 'ArrowLeft':
+                case 'a':
+                case 'A':
+                    e.preventDefault();
+                    changeDirection('LEFT');
+                    break;
+                case 'ArrowRight':
+                case 'd':
+                case 'D':
+                    e.preventDefault();
+                    changeDirection('RIGHT');
+                    break;
+                case ' ':
+                    e.preventDefault();
+                    pauseGame();
+                    break;
+            }
+        });
+
+        // İlk çizim
+        drawGame();
+    </script>
+</body>
+</html>

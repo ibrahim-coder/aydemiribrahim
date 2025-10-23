@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ibrahim AYDEMİR</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="icon2.png" type="image/x-icon" />
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="logo"><img src="icon2.png" width="75px" height="75px"></div>
+        <ul class="nav-links">
+            <li><a href="#home">Ana Sayfa</a></li>
+            <li><a href="#about">Hakkımda</a></li>
+            <li><a href="#skills">Yetenekler</a></li>
+            <li><a href="#projects">Projeler</a></li>
+            <li><a href="#contact">İletişim</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="bg-animation">
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+        </div>
+        <div class="hero-content">
+            <h1>Merhaba, Ben İbrahim AYDEMİR</h1>
+            <p class="subtitle">Backend Developer</p>
+            <p>Modern web teknolojileri ile kullanıcı dostu ve etkileyici web siteleri oluşturuyorum. Ayrıca AI alanında
+                kendimi geliştiriyorum.</p>
+            <div class="cta-buttons">
+                <a href="#projects" class="btn btn-primary">Projelerimi Gör</a>
+                <a href="#contact" class="btn btn-secondary">İletişime Geç</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <h2 class="section-title">Hakkımda</h2>
+        <p style="text-align: center; max-width: 800px; margin: 0 auto; line-height: 1.8; font-size: 1.1rem;">
+            Teknolojiye olan tutkum ve sürekli öğrenme isteğimle, modern web geliştirme alanında kendimi geliştiriyorum.
+            Kullanıcı deneyimini ön planda tutarak, hem estetik hem de işlevsel projeler üretmeyi seviyorum.
+            Her gün yeni bir şeyler öğrenmek ve bunları projelerime yansıtmak beni motive ediyor.
+        </p>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills">
+        <h2 class="section-title">Yeteneklerim</h2>
+        <div class="skills-grid">
+            <div class="skill-card">
+                <div class="skill-icon">💻</div>
+                <h3>Front-End</h3>
+                <p>HTML, CSS, ile tasarımlar oluşturuyorum ama asıl backend trafını kendime daha yakın görüyorum .</p>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon">⚙️</div>
+                <h3>Back-End</h3>
+                <p>C#, Python, PHP, Java ile güçlü ve güvenli sunucu taraflı uygulamalar oluşturuyorum.</p>
+            </div>
+            <div class="skill-card">
+                <div class="skill-icon">📱</div>
+                <h3>Mobile Development</h3>
+                <p>Java ve Flutter ile cross-platform mobil uygulamalar konusunda kendimi geliştiriyorum.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects">
+        <h2 class="section-title">Projelerim</h2>
+        <div class="projects-grid">
+
+            <a href="https://github.com/ibrahim-coder/E-Commerce-Web-Site" style="text-decoration: none;">
+                <div class="project-card">
+                    <div class="project-image">🚀</div>
+                    <div class="project-content">
+                        <h3>E-Ticaret Web Sitesi</h3>
+                        <p>Modern ve kullanıcı dostu bir e-ticaret platformu. Asp.Net MVC Teknolojisi ile geliştirildi
+                            ama
+                            henüz yayınlanmadı, github profilime giderek görebilirsiniz.</p>
+                    </div>
+                </div>
+            </a>
+
+            <a href="tetris.html" style="text-decoration: none;">
+                <div class="project-card">
+                    <div class="project-image">🎮</div>
+                    <div class="project-content">
+                        <h3>Tetris Oyunu</h3>
+                        <p>HTML5 ve JavaScript ile geliştirilmiş eğlenceli bir tetris oyunu.</p>
+                    </div>
+                </div>
+            </a>
+
+            <a href="snake.html" style="text-decoration: none;">
+                <div class="project-card">
+                    <div class="project-image">🎮</div>
+                    <div class="project-content">
+                        <h3>Yılan Oyunu</h3>
+                        <p>HTML5 ve JavaScript ile geliştirilmiş eğlenceli bir yılan oyunu.</p>
+                    </div>
+                </div>
+            </a>
+
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <h2 class="section-title">İletişim</h2>
+        <form class="contact-form" id="contact-form">
+            <div class="form-group">
+                <label for="name">Adınız</label>
+                <input type="text" name="from_name" id="name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">E-posta</label>
+                <input type="email" name="from_email" id="email" required>
+            </div>
+            <div class="form-group">
+                <label for="message">Mesajınız</label>
+                <textarea name="message" id="message" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary" id="submit-btn">
+                <span id="btn-text">Gönder</span>
+                <span id="btn-loading" style="display: none;">Gönderiliyor...</span>
+            </button>
+            <div id="form-status" style="margin-top: 15px; text-align: center; font-weight: 600;"></div>
+        </form>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="social-links">
+            <a href="https://github.com/ibrahim-coder" title="GitHub">🔗</a>
+            <a href="https://www.linkedin.com/in/ibrahim-aydemir-5682472a9/" title="LinkedIn">💼</a>
+            <a href="https://www.instagram.com/ibrahimaydemir_16/" title="Instagram">📸</a>
+        </div>
+        <p>&copy; 2025 Tüm hakları saklıdır.</p>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <script src="main.js"></script>
+</body>
+
+</html>
