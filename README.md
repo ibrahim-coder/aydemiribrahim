@@ -1,9 +1,14 @@
-# İbrahim Aydemir – Kişisel Web Sitesi
+# 🌐 aydemiribrahim.com
 
-Merhaba! Ben **İbrahim Aydemir**, yazılım ve teknoloji tutkunu bir geliştiriciyim.  
-Bu repository, kişisel web sitemin kaynak kodlarını içeriyor.  
+Bu proje, İbrahim Aydemir'in kişisel web sitesidir.  
+Modern bir tasarımla, portföy, hakkımda ve iletişim bölümlerini içerir.
 
-## 🚀 Hakkımda
-- 💻 Web geliştirme ve yazılım mühendisliği ile ilgileniyorum  
-- 🤖 Robotik ve elektronik projeler üzerinde çalışıyorum  
-- 🎵 Müzik dinlemeyi ve yaratıcı projeler üretmeyi seviyorum 
+## 🛠️ Kullanılan Teknolojiler
+- HTML5
+- CSS3 (Responsive Design)
+- JavaScript (EmailJS entegrasyonu)
+- GitHub Pages (Hosting)
+
+## 📬 İletişim
+📧 [Mail Gönder](mailto:aydemiribrahim@example.com)  
+🌍 [https://aydemiribrahim.com](https://aydemiribrahim.com)
